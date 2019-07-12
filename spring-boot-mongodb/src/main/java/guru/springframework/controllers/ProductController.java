@@ -19,11 +19,18 @@ import javax.validation.Valid;
  */
 @Controller
 public class ProductController {
+
     private ProductService productService;
 
     private ProductToProductForm productToProductForm;
 
-    @Autowired
+    // Best way to inject dependencies => CONSTRUCTOR
+    public ProductController(ProductService productService, ProductToProductForm productToProductForm) {
+        this.productService = productService;
+        this.productToProductForm = productToProductForm;
+    }
+
+    /*@Autowired
     public void setProductToProductForm(ProductToProductForm productToProductForm) {
         this.productToProductForm = productToProductForm;
     }
@@ -31,7 +38,7 @@ public class ProductController {
     @Autowired
     public void setProductService(ProductService productService) {
         this.productService = productService;
-    }
+    }*/
 
     @RequestMapping("/")
     public String redirToList(){

@@ -21,6 +21,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
+		<docker.image.name>spring-boot-docker</docker.image.name>
 	</properties>
 
 	<dependencies>
@@ -51,6 +52,30 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>io.fabric8</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<configuration>
+					<dockerHost>unix:///var/run/docker.sock</dockerHost>
+					<verbose>true</verbose>
+					<images>
+						<image>
+							<name>${docker.image.name}</name>
+						</image>
+						<build>
+							<dockerFileDir>${project.basedir}/src/main/docker/</dockerFileDir>
+							<!-- Copies artifact to docker build dir in target -->
+							<assembly>
+								<descriptorRef>artifact</descriptorRef>
+							</assembly>
+							<tags>
+								<tag>latest</tag>
+								<tag>${project.version}</tag>
+							</tags>
+						</build>
+					</images>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

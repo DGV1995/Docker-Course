@@ -45,6 +45,13 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>org.codehaus.groovy</groupId>
+			<artifactId>groovy-all</artifactId>
+			<version>2.4.8</version>
+			<scope>runtime</scope>
+		</dependency>
 	</dependencies>
 	
 	<build>
@@ -63,7 +70,7 @@
 						<image>
 							<name>${docker.image.name}</name>
 							<build>
-								<dockerFileDir>${project.basedir}/src/main/docker/</dockerFileDir>
+								<dockerFileDir>${project.basedir}/target/dockerfile/</dockerFileDir>
 								<!-- Copies artifact to docker build dir in target -->
 								<assembly>
 									<descriptorRef>artifact</descriptorRef>
@@ -75,6 +82,24 @@
 							</build>
 						</image>
 					</images>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.gmavenplus</groupId>
+				<artifactId>gmavenplus-plugin</artifactId>
+				<version>1.7.1</version>
+				<executions>
+					<execution>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>execute</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<scripts>
+						<script>file:///${project.basedir}/src/main/scripts/BuildDockerfile.groovy</script>
+					</scripts>
 				</configuration>
 			</plugin>
 		</plugins>

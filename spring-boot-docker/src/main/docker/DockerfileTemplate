@@ -5,4 +5,4 @@ VOLUME /tmp
 ADD maven/${fileName}.jar ${fileName}.jar
 RUN sh -c "touch myapp.jar"
 
-CMD ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "${fileName}.jar"]
+CMD ["java", "-jar", "${fileName}.jar"]

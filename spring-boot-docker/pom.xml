@@ -61,6 +61,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 			<plugin>
+				<!-- Plugin to automate images building and running docker commands with maven like 'mvn docker:run'ddd -->
 				<groupId>io.fabric8</groupId>
 				<artifactId>docker-maven-plugin</artifactId>
 				<configuration>
@@ -80,6 +81,12 @@
 									<!-- <tag>${project.version}</tag> -->
 								</tags>
 							</build>
+							<run>
+								<!-- We do not have to use '-p 8080:8080' with this configuration -->
+								<ports>
+									<port>8080:8080</port>
+								</ports>
+							</run>
 						</image>
 					</images>
 				</configuration>
